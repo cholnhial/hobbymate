@@ -1,0 +1,32 @@
+version: '3'
+services:
+  project-service-db:
+    image: mysql:8.0
+    container_name: project-service-mysql
+    environment:
+      MYSQL_DATABASE: project_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3315:3306"
+    restart: always
+  user-service-db:
+    image: mysql:8.0
+    container_name: user-service-mysql
+    environment:
+      MYSQL_DATABASE: user_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3316:3306"
+    restart: always
+  shop-service-db:
+    image: mysql:8.0
+    container_name: shop-service-mysql
+    environment:
+      MYSQL_DATABASE: shop_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3317:3306"
+    restart: always
