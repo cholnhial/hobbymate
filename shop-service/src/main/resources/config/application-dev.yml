@@ -4,7 +4,7 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3315/project_db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3317/shop_db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: root
   jpa:
@@ -16,7 +16,7 @@ spring:
     properties:
       format_sql: true
 server:
-  port: 8090
+  port: 8091
 eureka:
   client:
     serviceUrl:
