@@ -21,8 +21,9 @@ public class Project {
     @Column
     private Long userId;
 
-    @Column
-    private Long artefactId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "artefact_id", referencedColumnName = "id")
+    private Artefact artefact;
 
     @Column
     private String title;
