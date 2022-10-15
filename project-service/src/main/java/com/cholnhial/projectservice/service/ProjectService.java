@@ -42,6 +42,10 @@ public class ProjectService {
         return this.projectRepository.findAll();
     }
 
+    public List<Project> getAllByUserId(Long userId) {
+        return this.projectRepository.findAllByUserId(userId);
+    }
+
     public Optional<Project> getOneById(Long id) {
         return this.projectRepository.findById(id);
     }

@@ -53,6 +53,12 @@ public class ProjectRestController {
 
     }
 
+    @GetMapping("/project/all/{userId}")
+    public ResponseEntity<List<ProjectResponse>> getAllByUserId(@PathVariable("userId")  Long userId) {
+        return ResponseEntity.ok(this.projectService.getAllByUserId(userId)
+                .stream().map(projectMapper::projectToProjectResponse).toList());
+    }
+
     @PutMapping("/project/{id}")
     public ResponseEntity<ProjectResponse> updateProject(@Valid @RequestBody ProjectUpdateRequest updateRequest) {
         Optional<Project> projectOptional = projectService.getOneById(updateRequest.getId());
