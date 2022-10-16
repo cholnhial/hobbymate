@@ -3,6 +3,13 @@ spring:
     name: hobbymate-shop-service
   profiles:
     active: '@spring.profiles.active@'
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: MYSQL
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
   datasource:
     hikari:
       data-source-properties:
@@ -10,6 +17,9 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
+    url: jdbc:mysql://shop-service-mysql:3306/project_db?useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: root
   main:
     allow-bean-definition-overriding: true
 eureka:
