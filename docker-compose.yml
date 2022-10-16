@@ -30,3 +30,62 @@ services:
     ports:
       - "3317:3306"
     restart: always
+  discovery:
+    image: hobbymate/discovery-service
+    container_name: discovery-service
+    build:
+      context: ./discovery-service
+      dockerfile: Dockerfile
+    ports:
+      - "8094:8094"
+  gateway:
+    image: hobbymate/gateway-service
+    container_name: gateway-service
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    ports:
+      - "8095:8095"
+    links:
+      - discovery
+  projects:
+    image: hobbymate/project-service-api
+    container_name: project-service
+    build:
+      context: ./project-service
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    links:
+      - discovery
+      - project-service-db
+    depends_on:
+       - users
+       - shop
+       - project-service-db
+  users:
+    image: hobbymate/user-service-api
+    container_name: user-service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - "8093:8093"
+    links:
+      - discovery
+      - user-service-db
+    depends_on:
+      - user-service-db
+  shop:
+    image: hobbymate/shop-service-api
+    container_name: shop-service
+    build:
+      context: ./shop-service
+      dockerfile: Dockerfile
+    ports:
+      - "8091:8091"
+    links:
+      - discovery
+      - shop-service-db
+    depends_on:
+      - shop-service-db

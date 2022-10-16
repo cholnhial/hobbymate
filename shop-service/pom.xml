@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>com.cholnhial</groupId>
 	<artifactId>shop-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>shop-service</name>
 	<description>shop service for HobbyMate</description>
 	<properties>
@@ -71,6 +70,7 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
+		<finalName>shop-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

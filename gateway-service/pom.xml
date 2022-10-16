@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>com.cholnhial</groupId>
 	<artifactId>gateway-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>gateway-service</name>
 	<description>Gateway Service for hobbymate</description>
 	<properties>
@@ -51,6 +50,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>gateway-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

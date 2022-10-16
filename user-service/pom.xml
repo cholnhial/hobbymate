@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>com.cholnhial</groupId>
 	<artifactId>user-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>user-service</name>
 	<description>User service for HobbyMate</description>
 	<properties>
@@ -71,6 +70,7 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
+		<finalName>user-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

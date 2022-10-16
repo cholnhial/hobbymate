@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>com.cholnhial</groupId>
 	<artifactId>project-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>project-service</name>
 	<description>Project service for HobbyMate</description>
 	<properties>
@@ -72,6 +71,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>project-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>com.cholnhial</groupId>
 	<artifactId>discovery-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>discovery-service</name>
 	<description>Eureka Server</description>
 	<properties>
@@ -42,6 +41,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>discovery-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
