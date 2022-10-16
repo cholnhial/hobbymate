@@ -1,12 +1,14 @@
 spring:
   application:
-    name: eureka-discovery-service
+    name: discovery-service
 
 server:
-  port: 8094
+  port: ${PORT:8094}
 eureka:
+  instance:
+    hostname: discovery
   client:
     registerWithEureka: false
     fetchRegistry: false
-    service-url:
-      defaultZone: http://localhost:8094/eureka
+  server:
+    enableSelfPreservation: false

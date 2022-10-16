@@ -12,3 +12,12 @@ spring:
         useServerPrepStmts: true
   main:
     allow-bean-definition-overriding: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URL:http://discovery-service:8094}/eureka
+ribbon:
+  eureka:
+    enabled: true
+server:
+  port: ${PORT:8093}
