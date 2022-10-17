@@ -17,8 +17,7 @@ public class ProjectUpdateRequest {
     @NotBlank
     private String title;
 
-    @NotBlank
-    private String status;
+    private Boolean isCompleted;
 
     private String description;
 }

@@ -18,7 +18,7 @@ public class ProjectMapper {
         artefactResponse.setPicture(project.getArtefact().getPicture());
         ProjectResponse projectResponse = new ProjectResponse();
         projectResponse.setTitle(project.getTitle());
-        projectResponse.setStatus(project.getStatus());
+        projectResponse.setIsComplete(project.getIsComplete());
         projectResponse.setId(project.getId());
         projectResponse.setUserId(project.getUserId());
         projectResponse.setDescription(project.getDescription());

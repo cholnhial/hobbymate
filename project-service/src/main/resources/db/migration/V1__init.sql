@@ -2,7 +2,7 @@
 -- Table `artefact`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `artefact` (
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,
   `price` DECIMAL(20,2) NOT NULL,
@@ -16,11 +16,11 @@ ENGINE = InnoDB;
 -- Table `project`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `project` (
-  `id` BIGINT(20) NULL AUTO_INCREMENT,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT(20) NOT NULL,
   `artefact_id` BIGINT(20) NOT NULL,
   `title` VARCHAR(255) NOT NULL,
-  `status` ENUM('IN_PROGRESS', 'COMPLETE') NOT NULL,
+  `is_complete` INT(1) NOT NULL,
   `description` TEXT NOT NULL,
   INDEX `fk_project_user_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_project_artefact1_idx` (`artefact_id` ASC) VISIBLE,
@@ -34,7 +34,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `collaborator` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `project_id` BIGINT(20) NOT NULL,
-  `fullName` VARCHAR(255) NOT NULL,
+  `full_name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `mobile` VARCHAR(45) NOT NULL,
   `suburb` VARCHAR(255) NOT NULL,

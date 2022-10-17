@@ -30,6 +30,7 @@ public class Artefact {
     private BigDecimal price;
 
     @Column
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean isListed;
 
     @Column

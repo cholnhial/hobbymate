@@ -19,7 +19,7 @@ public class ProjectResponse {
 
     private String title;
 
-    private String status;
+    private Boolean isComplete;
 
     private String description;
 }

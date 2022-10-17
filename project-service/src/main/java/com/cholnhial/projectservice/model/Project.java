@@ -29,7 +29,8 @@ public class Project {
     private String title;
 
     @Column
-    private String status;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private Boolean isComplete;
 
     @Column(columnDefinition = "text")
     @Type(type = "text")

@@ -6,22 +6,22 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: project-service
-          uri: lb://PROJECT-SERVICE
+        - id: hobbymate-project-service
+          uri: lb://HOBBYMATE-PROJECT-SERVICE
           predicates:
-            - Path=/projects-api/**
-        - id: user-service
-          uri: lb://USER-SERVICE
+          - Path=/projects/**
+        - id: hobbymate-user-service
+          uri: lb://HOBBYMATE-USER-SERVICE
           predicates:
-            - Path=/users-api/**
-        - id: shop-service
-          uri: lb://SHOP-SERVICE
+          - Path=/users/**
+        - id: hobbymate-shop-service
+          uri: lb://HOBBYMATE-SHOP-SERVICE
           predicates:
-            - Path=/shop-api/**
-        - id: containerized-products
+          - Path=/shop/**
 server:
   port: ${PORT:8095}
 eureka:
   client:
+    registerWithEureka: false
     serviceUrl:
-      defaultZone: ${DISCOVERY_URL:http://discovery-service:8094}/eureka
+      defaultZone: ${DISCOVERY_URL:http://discovery:8761}/eureka

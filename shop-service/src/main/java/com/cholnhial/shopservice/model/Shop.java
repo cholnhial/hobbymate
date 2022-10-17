@@ -22,11 +22,11 @@ public class Shop {
     @Column
     private String name;
 
-    @Column
-    private String description;
-
     @Column(columnDefinition = "text")
     @Type(type = "text")
+    private String description;
+
+    @Column
     private BigDecimal price;
 
     @Column

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/projects/api")
 @RequiredArgsConstructor
 public class ProjectRestController {
 
@@ -25,7 +25,7 @@ public class ProjectRestController {
 
     private final ProjectMapper projectMapper;
 
-    @PostMapping("/project")
+    @PostMapping("/new")
     public ResponseEntity<NewProjectResponse> createProject(@Valid @RequestBody NewProjectRequest projectRequest) {
         Project project = new Project();
         project.setTitle(projectRequest.getTitle());
@@ -46,14 +46,14 @@ public class ProjectRestController {
 
     }
 
-    @GetMapping("/project/all")
+    @GetMapping("/all")
     public ResponseEntity<List<ProjectResponse>> getAll() {
         return ResponseEntity.ok(this.projectService.getAll()
                 .stream().map(projectMapper::projectToProjectResponse).toList());
 
     }
 
-    @GetMapping("/project/all/{userId}")
+    @GetMapping("/all/{userId}")
     public ResponseEntity<List<ProjectResponse>> getAllByUserId(@PathVariable("userId")  Long userId) {
         return ResponseEntity.ok(this.projectService.getAllByUserId(userId)
                 .stream().map(projectMapper::projectToProjectResponse).toList());
@@ -66,7 +66,7 @@ public class ProjectRestController {
             Project project = projectOptional.get();
             project.setTitle(updateRequest.getTitle());
             project.setDescription(updateRequest.getDescription());
-            project.setStatus(updateRequest.getStatus());
+            project.setIsComplete(updateRequest.getIsCompleted());
             project.getArtefact().setName(updateRequest.getArtefact().getName());
             project.getArtefact().setDescription(updateRequest.getArtefact().getDescription());
             project.getArtefact().setPrice(updateRequest.getArtefact().getPrice());
@@ -80,7 +80,7 @@ public class ProjectRestController {
         }
     }
 
-    @PostMapping("/project/{projectId}/{userId}")
+    @PostMapping("/join/{projectId}/{userId}")
     public ResponseEntity<?> joinProject(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId) {
         // talk to users microservice to retrieve user details
 

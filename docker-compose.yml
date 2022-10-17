@@ -37,7 +37,8 @@ services:
       context: ./discovery-service
       dockerfile: Dockerfile
     ports:
-      - "8094:8094"
+      - "8761:8761"
+    restart: always
   gateway:
     image: hobbymate/gateway-service
     container_name: gateway-service
@@ -48,6 +49,7 @@ services:
       - "8095:8095"
     links:
       - discovery
+    restart: always
   projects:
     image: hobbymate/project-service-api
     container_name: project-service
@@ -60,9 +62,12 @@ services:
       - discovery
       - project-service-db
     depends_on:
+       - discovery
+       - project-service-db
        - users
        - shop
-       - project-service-db
+    restart: always
+
   users:
     image: hobbymate/user-service-api
     container_name: user-service
@@ -75,7 +80,9 @@ services:
       - discovery
       - user-service-db
     depends_on:
+      - discovery
       - user-service-db
+    restart: always
   shop:
     image: hobbymate/shop-service-api
     container_name: shop-service
@@ -88,4 +95,6 @@ services:
       - discovery
       - shop-service-db
     depends_on:
+      - discovery
       - shop-service-db
+    restart: always
