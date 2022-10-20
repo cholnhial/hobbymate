@@ -3,6 +3,7 @@ package com.cholnhial.projectservice.service;
 import com.cholnhial.projectservice.model.Artefact;
 import com.cholnhial.projectservice.model.Collaborator;
 import com.cholnhial.projectservice.model.Project;
+import com.cholnhial.projectservice.payload.NewListingRequest;
 import com.cholnhial.projectservice.payload.UserResponse;
 import com.cholnhial.projectservice.repository.CollaboratorRepository;
 import com.cholnhial.projectservice.repository.ProjectRepository;
@@ -11,6 +12,7 @@ import org.apache.catalina.User;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -72,6 +74,24 @@ public class ProjectService {
 
     @Transactional
     public Project updateProject(Project project) {
+        ServiceInstance userServiceInstance = loadBalancerClient.choose("HOBBYMATE-SHOP-SERVICE");
+        if (project.getArtefact().getIsListed()) {
+            String urlList = userServiceInstance.getUri().toString() + "/shop/api/list";
+            // list in shop
+            NewListingRequest listing = new NewListingRequest();
+            listing.setArtefactId(project.getArtefact().getId());
+            listing.setDescription(project.getArtefact().getDescription());
+            listing.setName(project.getArtefact().getName());
+            listing.setPrice(project.getArtefact().getPrice());
+            listing.setPicture(project.getArtefact().getPicture());
+            HttpEntity<NewListingRequest> request = new HttpEntity<>(listing, HttpHeaders.EMPTY);
+            ResponseEntity<String> response = restTemplate.postForEntity(urlList, request, String.class);
+        } else {
+            // unlist in shop
+            String unlistUrl = userServiceInstance.getUri().toString() + "/shop/api/unlist/" + project.getArtefact().getId();
+            HttpEntity<String> request = new HttpEntity<>("", HttpHeaders.EMPTY);
+            ResponseEntity<String> response = restTemplate.exchange(unlistUrl, HttpMethod.POST, request, String.class);
+        }
         return this.projectRepository.save(project);
     }
 
@@ -81,6 +101,14 @@ public class ProjectService {
 
     public List<Project> getAllByUserId(Long userId) {
         return this.projectRepository.findAllByUserId(userId);
+    }
+
+    public List<Project> getAllNotOwnedByUserId(Long userId) {
+        return this.projectRepository.findAllNotOwnedByUserId(userId);
+    }
+
+    public List<Project> getAllProjectsCollaboratingIn(Long userId) {
+        return this.projectRepository.findAllCollaboratingInByUserId(userId);
     }
 
     public Optional<Project> getOneById(Long id) {

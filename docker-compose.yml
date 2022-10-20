@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 services:
   project-service-db:
     image: mysql:8.0
@@ -9,6 +9,12 @@ services:
       MYSQL_ROOT_HOST: '%'
     ports:
       - "3315:3306"
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+          condition: on-failure
     restart: always
   user-service-db:
     image: mysql:8.0
@@ -19,6 +25,12 @@ services:
       MYSQL_ROOT_HOST: '%'
     ports:
       - "3316:3306"
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: on-failure
     restart: always
   shop-service-db:
     image: mysql:8.0
@@ -29,6 +41,12 @@ services:
       MYSQL_ROOT_HOST: '%'
     ports:
       - "3317:3306"
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: on-failure
     restart: always
   discovery:
     image: hobbymate/discovery-service
@@ -38,6 +56,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8761:8761"
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: on-failure
     restart: always
   gateway:
     image: hobbymate/gateway-service
@@ -47,6 +71,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8095:8095"
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: on-failure
     links:
       - discovery
     restart: always
@@ -58,11 +88,20 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8090:8090"
+    deploy:
+      replicas: 2
+      placement:
+        max_replicas_per_node: 2
+      restart_policy:
+        condition: on-failure
     links:
       - discovery
       - project-service-db
     depends_on:
+       - discovery
        - project-service-db
+       - users
+       - shop
     restart: always
 
   users:
@@ -73,10 +112,17 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8093:8093"
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: on-failure
     links:
       - discovery
       - user-service-db
     depends_on:
+      - discovery
       - user-service-db
     restart: always
   shop:
@@ -87,10 +133,33 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8091:8091"
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: on-failure
     links:
       - discovery
       - shop-service-db
     depends_on:
       - discovery
       - shop-service-db
+    restart: always
+  webapp:
+    image: hobbymate/hobbymate-webapp
+    container_name: hobbymate-webapp
+    build:
+      context: ./hobbymate-webapp
+      dockerfile: Dockerfile
+    ports:
+      - "9797:9797"
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - gateway
     restart: always

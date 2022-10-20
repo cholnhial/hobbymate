@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {IProject} from "../project.model";
+import {IShop} from "../shop.model";
+import * as _ from "lodash";
+import {ProjectsService} from "../projects.service";
+import {ShopService} from "../shop.service";
 
 @Component({
   selector: 'app-shop',
@@ -7,9 +12,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopComponent implements OnInit {
 
-  constructor() { }
+  listings: IShop[][] = [];
+  constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
+    this.loadListings();
   }
 
+  loadListings() {
+    this.shopService.getAll().subscribe({
+      next: resp => {
+        this.listings = _.chunk(resp.body,3);
+      }
+    })
+  }
 }

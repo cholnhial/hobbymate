@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { faPlus, faEye, faEdit } from '@fortawesome/free-solid-svg-icons';
+import {IProject} from "../project.model";
+import * as _ from "lodash";
+import {ProjectsService} from "../projects.service";
+import {PrincipalService} from "../principal.service";
 
 @Component({
   selector: 'app-collaborations',
@@ -6,10 +11,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./collaborations.component.scss']
 })
 export class CollaborationsComponent implements OnInit {
+  faPlus = faPlus;
+  faEye = faEye;
+  faEdit = faEdit;
+  collabs: IProject[][] = [];
 
-  constructor() { }
+  constructor(private projectService: ProjectsService, private principal: PrincipalService) { }
 
   ngOnInit(): void {
+    this.loadMyCollabs();
+  }
+
+  loadMyCollabs() {
+    this.principal.identity(false).then(user => {
+      this.projectService.getAllCollabs(user.id).subscribe({
+        next: resp => {
+          this.collabs = _.chunk(resp.body,3);
+        }
+      })
+    })
   }
 
 }

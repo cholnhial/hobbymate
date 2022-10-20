@@ -15,6 +15,7 @@ import { ProjectComponent } from './project/project.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import {NgxWebstorageModule} from "ngx-webstorage";
+import { JoinComponent } from './join/join.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {NgxWebstorageModule} from "ngx-webstorage";
     ShopComponent,
     ProjectComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    JoinComponent
   ],
   imports: [
     BrowserModule,

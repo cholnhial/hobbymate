@@ -21,8 +21,20 @@ export class ProjectsService {
     return this.http.post(SERVER_API_URL + 'projects/api/new', project, {observe: 'response'});
   }
 
+  join(projectId: number, userId: number): Observable<HttpResponse<any>> {
+    return this.http.post(SERVER_API_URL + `projects/api/join/${projectId}/${userId}`, {}, {observe: 'response'});
+  }
+
   getAllUserProjects(userId: number): Observable<EntityArrayResponseType> {
     return this.http.get<IProject[]>(SERVER_API_URL + `projects/api/all/${userId}`, { observe: 'response' });
+  }
+
+  getAllNotJoined(userId: number): Observable<EntityArrayResponseType> {
+    return this.http.get<IProject[]>(SERVER_API_URL + `projects/api/all/${userId}/new`, { observe: 'response' });
+  }
+
+  getAllCollabs(userId: number): Observable<EntityArrayResponseType> {
+    return this.http.get<IProject[]>(SERVER_API_URL + `projects/api/all/${userId}/collab`, { observe: 'response' });
   }
 
   updateProject(project: IUpdateProject): Observable<HttpResponse<any>> {

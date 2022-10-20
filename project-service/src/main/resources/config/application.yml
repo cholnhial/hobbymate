@@ -17,7 +17,7 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
-    url: jdbc:mysql://project-service-mysql:3306/project_db?useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://project-service-db:3306/project_db?useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: root
   main:

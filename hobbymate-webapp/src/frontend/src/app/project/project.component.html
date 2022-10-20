@@ -2,14 +2,15 @@
   <div class="d-flex justify-content-between">
     <h1 class="project-title">{{ project?.title}}</h1>
     <div class="d-flex justify-content-center align-items-center flex-column">
-      <fa-icon class="icon icon-completed" [icon]="faCheckCircle"></fa-icon>
-      <h6>Completed</h6>
+      <fa-icon [ngClass]="{'icon-completed': project?.isComplete}" class="icon" [icon]="project?.isComplete ? faCheckCircle : faClock"></fa-icon>
+      <h6 [hidden]="!project?.isComplete">Completed</h6>
+      <h6 [hidden]="project?.isComplete">In Progress</h6>
     </div>
 
   </div>
 
   <div class="d-flex join-flex justify-content-end">
-    <button class="btn btn-outline-light">JOIN</button>
+    <button (click)="onJoin()" class="btn btn-outline-light">JOIN</button>
   </div>
 </div>
 <div class="container-fluid">
@@ -17,12 +18,35 @@
     <li ngbNavItem>
       <a ngbNavLink>Home</a>
       <ng-template ngbNavContent>
-        <quill-view [content]="project.description" format="html" theme="snow"></quill-view>
+        <quill-view [content]="project?.description" format="html" theme="snow"></quill-view>
       </ng-template>
     </li>
     <li ngbNavItem>
       <a ngbNavLink>Collaborators</a>
-      <ng-template ngbNavContent>Second content</ng-template>
+      <ng-template ngbNavContent>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Email</th>
+            <th scope="col">Suburb</th>
+            <th scope="col">Bio</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let collaborator of project.collaborators">
+            <th scope="row">{{ collaborator.id }}</th>
+            <td>{{ collaborator.fullName }}</td>
+            <td>{{ collaborator.mobile }}</td>
+            <td>{{ collaborator.email }}</td>
+            <td>{{ collaborator.suburb }}</td>
+            <td>{{ collaborator.bio }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-template>
     </li>
     <li ngbNavItem>
       <a ngbNavLink>Artefact</a>

@@ -63,6 +63,18 @@ public class ProjectRestController {
                 .stream().map(projectMapper::projectToProjectResponse).toList());
     }
 
+    @GetMapping("/all/{userId}/new")
+    public ResponseEntity<List<ProjectResponse>> getAllNotOwnedByUserId(@PathVariable("userId")  Long userId) {
+        return ResponseEntity.ok(this.projectService.getAllNotOwnedByUserId(userId)
+                .stream().map(projectMapper::projectToProjectResponse).toList());
+    }
+
+    @GetMapping("/all/{userId}/collab")
+    public ResponseEntity<List<ProjectResponse>> getAllCollabs(@PathVariable("userId")  Long userId) {
+        return ResponseEntity.ok(this.projectService.getAllProjectsCollaboratingIn(userId)
+                .stream().map(projectMapper::projectToProjectResponse).toList());
+    }
+
     @PutMapping("/project/{id}")
     public ResponseEntity<ProjectResponse> updateProject(@Valid @RequestBody ProjectUpdateRequest updateRequest) {
         Optional<Project> projectOptional = projectService.getOneById(updateRequest.getId());

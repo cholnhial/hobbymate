@@ -7,6 +7,7 @@ import {INewProject} from "./new-project.model";
 import * as _ from 'lodash';
 import {IUpdateProject} from "./update-project.model";
 import {IUpdateArtefact} from "./update-artefact.model";
+import {PrincipalService} from "../principal.service";
 
 @Component({
   selector: 'app-my-projects',
@@ -30,7 +31,7 @@ export class MyProjectsComponent implements OnInit {
     title: ""
   }
 
-  constructor(private modalService: NgbModal, private projectService: ProjectsService) {
+  constructor(private modalService: NgbModal, private projectService: ProjectsService, private principal: PrincipalService) {
   }
 
   ngOnInit(): void {
@@ -84,19 +85,25 @@ export class MyProjectsComponent implements OnInit {
   }
 
   loadMyProjects() {
-    this.projectService.getAllUserProjects(1).subscribe({
-      next: resp => {
-        this.myProjects = _.chunk(resp.body,3);
-      }
+    this.principal.identity(false).then(user => {
+      this.projectService.getAllUserProjects(user.id).subscribe({
+        next: resp => {
+          this.myProjects = _.chunk(resp.body,3);
+        }
+      })
     })
   }
   onSaveNew(modal: any) {
     modal.close('');
-    this.projectService.createNewProject(this.project).subscribe({
-      next: (resp) => {
-        this.loadMyProjects()
-      }
-    })
+    this.principal.identity(false).then(user => {
+      this.project.userId = user.id;
+      this.projectService.createNewProject(this.project).subscribe({
+        next: (resp) => {
+          this.loadMyProjects()
+        }
+      });
+    });
+
   }
 
   onUpdate(modal: any) {

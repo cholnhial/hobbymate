@@ -1,1 +1,20 @@
-<p>shop works!</p>
+<div class="container p-4">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <input class="form-control form-control-lg" type="text" placeholder="Search..." />
+    </div>
+  </div>
+  <hr/>
+  <div class="row mt-4" *ngFor="let listingRow of listings">
+    <div class="col-4" *ngFor="let ls of listingRow ">
+      <div class="card" style="width: 18rem;">
+        <img [src]="ls.picture" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title">{{ ls.name}} - ${{ ls.price}}</h5>
+          <p class="card-text">{{ls.description}}</p>
+          <a href="mailto:test@gmail.com" class="btn btn-primary">CONTACT</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

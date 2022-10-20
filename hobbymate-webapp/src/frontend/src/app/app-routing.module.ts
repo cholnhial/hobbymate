@@ -5,6 +5,9 @@ import {ProjectComponent} from "./project/project.component";
 import {RegisterComponent} from "./register/register.component";
 import {LoginComponent} from "./login/login.component";
 import {UserRouteAccessService} from "./user-route-access.service";
+import {JoinComponent} from "./join/join.component";
+import {ShopComponent} from "./shop/shop.component";
+import {CollaborationsComponent} from "./collaborations/collaborations.component";
 
 
 const routes: Routes = [
@@ -21,6 +24,21 @@ const routes: Routes = [
   {
     path: 'project/:projectId',
     component: ProjectComponent,
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'join',
+    component: JoinComponent,
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'collab',
+    component: CollaborationsComponent,
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'shop',
+    component: ShopComponent,
     canActivate: [UserRouteAccessService]
   },
   {
