@@ -1,0 +1,23 @@
+<div class="container-fluid p-4">
+  <div class="d-flex justify-content-center">
+    <div class="card" style="width: 35rem">
+      <div class="card-body">
+        <h5 class="card-title">Fun is waiting!</h5>
+        <p class="card-text">Whether it's electronic projects,crafts or anything really!</p>
+        <form #loginForm="ngForm" novalidate>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input required minlength="1" [(ngModel)]="emailAddress" #email="ngModel" class="form-control" name="email" type="text" id="email" placeholder="john@gmail.com">
+            <div [hidden]="email.valid" class="text-danger">
+              Please enter your email to login
+            </div>
+            <a [routerLink]="['/register']">Get an account</a>
+          </div>
+          <div class="text-center">
+            <button [disabled]="loginForm.invalid" (click)="onLogin()" class="btn btn-primary">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,5 +18,8 @@ public class NewProjectRequest {
     @NotBlank
     private String title;
 
+    @NotBlank
+    private String shortDescription;
+
     private String description;
 }

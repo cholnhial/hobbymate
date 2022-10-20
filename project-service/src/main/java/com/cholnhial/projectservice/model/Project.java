@@ -6,7 +6,9 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table
@@ -25,6 +27,9 @@ public class Project {
     @JoinColumn(name = "artefact_id", referencedColumnName = "id")
     private Artefact artefact;
 
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
+    private Set<Collaborator> collaborators = new HashSet<>();
+
     @Column
     private String title;
 
@@ -35,6 +40,9 @@ public class Project {
     @Column(columnDefinition = "text")
     @Type(type = "text")
     private String description;
+
+    @Column
+    private String shortDescription;
 
     @Override
     public boolean equals(Object o) {

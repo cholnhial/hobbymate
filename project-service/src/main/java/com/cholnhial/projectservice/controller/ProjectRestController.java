@@ -8,6 +8,8 @@ import com.cholnhial.projectservice.payload.ProjectResponse;
 import com.cholnhial.projectservice.payload.ProjectUpdateRequest;
 import com.cholnhial.projectservice.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,11 +31,13 @@ public class ProjectRestController {
     public ResponseEntity<NewProjectResponse> createProject(@Valid @RequestBody NewProjectRequest projectRequest) {
         Project project = new Project();
         project.setTitle(projectRequest.getTitle());
-        project.setDescription(project.getDescription());
+        project.setDescription(projectRequest.getDescription());
         project.setUserId(projectRequest.getUserId());
+        project.setIsComplete(false);
+        project.setShortDescription(projectRequest.getShortDescription());
         Project savedProject = projectService.saveNewProject(project);
         NewProjectResponse savedResponse = new NewProjectResponse(savedProject.getId(), savedProject.getTitle(),
-                savedProject.getTitle());
+                savedProject.getDescription(), savedProject.getShortDescription());
         return ResponseEntity.created(URI.create("/api/project/" + savedProject.getId())).body(savedResponse);
     }
 
@@ -83,7 +87,7 @@ public class ProjectRestController {
     @PostMapping("/join/{projectId}/{userId}")
     public ResponseEntity<?> joinProject(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId) {
         // talk to users microservice to retrieve user details
-
+      projectService.addCollaborator(projectId, userId);
       return  ResponseEntity.ok().build();
     }
 }

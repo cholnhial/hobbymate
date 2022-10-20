@@ -15,6 +15,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     public User saveNewUser(User user) {
         return this.userRepository.save(user);
     }

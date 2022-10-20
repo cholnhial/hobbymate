@@ -14,4 +14,5 @@ public class NewProjectResponse {
     private Long id;
     private String title;
     private String description;
+    private String shortDescription;
 }

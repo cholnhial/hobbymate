@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,9 +18,13 @@ public class ProjectResponse {
 
     private ArtefactResponse artefact;
 
+    private List<CollaboratorResponse> collaborators;
+
     private String title;
 
     private Boolean isComplete;
 
     private String description;
+
+    private String shortDescription;
 }

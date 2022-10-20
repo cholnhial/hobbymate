@@ -1,0 +1,50 @@
+<div class="container-fluid p-4">
+  <div class="d-flex justify-content-center">
+    <div class="card" style="width: 45rem">
+      <div class="card-body">
+        <h5 class="card-title">Finding others to collaborate with on projects has never been easy</h5>
+        <p class="card-text">Whether it's electronic projects,crafts or anything really!</p>
+        <form #registrationForm="ngForm" novalidate>
+          <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input required minlength="1" [(ngModel)]="newUser.fullName" #name="ngModel" class="form-control" name="name" type="text" id="name" placeholder="John Doe">
+            <div [hidden]="name.valid" class="text-danger">
+              A name is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input required minlength="1" [(ngModel)]="newUser.email" #email="ngModel" class="form-control" name="email" type="text" id="email" placeholder="john@gmail.com">
+            <div [hidden]="email.valid" class="text-danger">
+              Please specify your email address
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="mobile" class="form-label">Mobile</label>
+            <input required minlength="1" [(ngModel)]="newUser.mobile" #mobile="ngModel" class="form-control" name="mobile" type="text" id="mobile" placeholder="0412345678">
+            <div [hidden]="mobile.valid" class="text-danger">
+              Please specify your email address
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="suburb" class="form-label">Suburb</label>
+            <input required minlength="1" [(ngModel)]="newUser.suburb" #suburb="ngModel" class="form-control" name="suburb" type="text" id="suburb" placeholder="Toowong">
+            <div [hidden]="suburb.valid" class="text-danger">
+              Please specify your suburb
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="bio" class="form-label">Tell us a bit about yourself</label>
+            <textarea required minlength="1" rows="3" [(ngModel)]="newUser.bio" #bio="ngModel" class="form-control" name="bio" id="bio" placeholder="I code..."></textarea>
+            <div [hidden]="bio.valid" class="text-danger">
+              Please don't be mysterious leave a little about you to help others
+            </div>
+          </div>
+          <div class="text-center">
+            <button [disabled]="registrationForm.invalid" (click)="onRegister()" class="btn btn-primary">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

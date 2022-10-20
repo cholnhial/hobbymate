@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `project` (
   `artefact_id` BIGINT(20) NOT NULL,
   `title` VARCHAR(255) NOT NULL,
   `is_complete` INT(1) NOT NULL,
+  `short_description` VARCHAR(512) NOT NULL,
   `description` TEXT NOT NULL,
   INDEX `fk_project_user_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_project_artefact1_idx` (`artefact_id` ASC) VISIBLE,

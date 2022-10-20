@@ -1,0 +1,156 @@
+<!-- START UPDATE PROJECT MODAL -->
+<ng-template #updateModalContent let-updateModal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title2">Update Project</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="updateModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form #updateProjectForm="ngForm" novalidate>
+      <div class="row">
+        <div class="col-6">
+
+          <fieldset>
+            <legend>Project</legend>
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input required minlength="1" [(ngModel)]="projectSelected.title" #editName="ngModel" class="form-control" name="edit-name" type="text" id="edit-name" placeholder="Arduino...">
+              <div [hidden]="editName.valid" class="text-danger">
+                A name is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="shortDescription" class="form-label">Short Description</label>
+              <textarea required minlength="1" rows="3" [(ngModel)]="projectSelected.shortDescription" #editShortDescription="ngModel" class="form-control" name="shortDescription" id="editShortDescription" placeholder="Just another project..."></textarea>
+              <div [hidden]="editShortDescription.valid" class="text-danger">
+                please provide a short description for your project
+              </div>
+            </div>
+            <label class="form-label">Details (use this to provide updates later)</label>
+            <quill-editor name="edit-description" [(ngModel)]="projectSelected.description" (onContentChanged)="onSelectedProjectContentChanged($event)" style="width: 100%; height: 17em"></quill-editor>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="completed" (change)="projectSelected.isCompleted = !projectSelected.isCompleted"  [checked]="projectSelected.isCompleted">
+              <label class="form-check-label" for="completed">
+                is completed?
+              </label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-6 artefact-col">
+          <fieldset>
+            <legend>Artefact</legend>
+            <div class="text-center">
+              <img alt="Artefact Photo" [src]="projectSelected.artefact.picture" />
+            </div>
+            <div class="mb-3">
+              <label for="artefact-name" class="form-label">Name</label>
+              <input required minlength="1" [(ngModel)]="projectSelected.artefact.name" #artefactName="ngModel" class="form-control" name="artefactName" type="text" id="artefact-name" placeholder="Arduino...">
+              <div [hidden]="artefactName.valid" class="text-danger">
+                An artefact name is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="artefact-photo" class="form-label">Picture URL</label>
+              <input required minlength="1" [(ngModel)]="projectSelected.artefact.picture" #artefactPhoto="ngModel" class="form-control" name="artefactPhoto" type="text" id="artefact-photo">
+              <div [hidden]="artefactPhoto.valid" class="text-danger">
+                Please set an image URL of your choice
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="artefact-price" class="form-label">Price</label>
+              <input required minlength="1" [(ngModel)]="projectSelected.artefact.price" #artefactPrice="ngModel" class="form-control" name="artefactPrice" type="number" id="artefact-price">
+              <div [hidden]="artefactPrice.valid" class="text-danger">
+                An price is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="artefactDescription" class="form-label">Description</label>
+              <textarea required minlength="1" rows="3" [(ngModel)]="projectSelected.artefact.description" #artefactDescription="ngModel" class="form-control" name="artefactDescription" id="artefactDescription" placeholder="Just another project..."></textarea>
+              <div [hidden]="artefactDescription.valid" class="text-danger">
+                please provide a short description for your artefact
+              </div>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="list-shop" (change)="projectSelected.artefact.isListed = !projectSelected.artefact.isListed" [checked]="projectSelected.artefact.isListed">
+              <label class="form-check-label" for="list-shop">
+                List in shop
+              </label>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="btn-group">
+      <button type="button" class="btn btn-outline-secondary" (click)="updateModal.close('Save click')">Cancel</button>
+      <button type="button" [disabled]="updateProjectForm.invalid" (click)="onUpdate(updateModal)" class="btn btn-outline-primary">Save</button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- END UPDATE PROJECT MODAL -->
+<!-- START NEW PROJECT MODAL -->
+<ng-template #newModalContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Project</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form #projectForm="ngForm" novalidate>
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input required minlength="1" [(ngModel)]="project.title" #name="ngModel" class="form-control" name="name" type="text" id="name" placeholder="Arduino...">
+        <div [hidden]="name.valid" class="text-danger">
+          A name is required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="shortDescription" class="form-label">Short Description</label>
+        <textarea required minlength="1" rows="3" [(ngModel)]="project.shortDescription" #shortDescription="ngModel" class="form-control" name="shortDescription" id="shortDescription" placeholder="Just another project..."></textarea>
+        <div [hidden]="shortDescription.valid" class="text-danger">
+          please provide a short description for your project
+        </div>
+      </div>
+      <label class="form-label">Details (use this to provide updates later)</label>
+      <quill-editor (onContentChanged)="onDescriptionUpdated($event)" style="width: 100%; height: 13rem"></quill-editor>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="btn-group">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Cancel</button>
+      <button type="button" [disabled]="projectForm.invalid" (click)="onSaveNew(modal)" class="btn btn-outline-primary">Save</button>
+    </div>
+  </div>
+</ng-template>
+<!-- END NEW PROJECT MODAL -->
+<div class="container p-4">
+  <div class="row">
+    <div class="col-md-10 col-sm-12">
+      <input class="form-control form-control-lg" type="text" placeholder="Search..." />
+    </div>
+    <div class="col-md-2 col-sm-12">
+      <button (click)="openNewProjectModal(newModalContent)" class="btn btn-primary btn-lg">New Project <fa-icon [icon]="faPlus"></fa-icon></button>
+    </div>
+  </div>
+  <hr/>
+  <div class="row mt-4" *ngFor="let projectRow of myProjects">
+    <div class="col-4" *ngFor="let proj of projectRow ">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ proj.title }}</h5>
+          <p class="card-text">{{ proj.shortDescription }}</p>
+        </div>
+        <div class="card-footer">
+          <div class="btn-group-sm float-end">
+            <button (click)="openProjectUpdateModal(updateModalContent, proj)" class="btn btn-secondary me-1">UPDATE  <fa-icon [icon]="faEdit"></fa-icon></button>
+            <a [routerLink]="['/project/', proj.id]" class="btn btn-primary">VIEW  <fa-icon [icon]="faEye"></fa-icon></a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
