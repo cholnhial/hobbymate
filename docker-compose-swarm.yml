@@ -51,6 +51,8 @@ services:
       - discovery
     restart: always
   projects:
+    deploy:
+      replicas: 2
     image: hobbymate/project-service-api
     container_name: project-service
     build:

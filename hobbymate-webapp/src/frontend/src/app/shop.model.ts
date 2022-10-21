@@ -5,4 +5,5 @@ export interface IShop {
   description: string;
   price: string;
   picture:string;
+  email: string;
 }

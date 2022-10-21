@@ -13,6 +13,7 @@ import {ShopService} from "../shop.service";
 export class ShopComponent implements OnInit {
 
   listings: IShop[][] = [];
+  original: IShop[]= [];
   constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
@@ -21,9 +22,19 @@ export class ShopComponent implements OnInit {
 
   loadListings() {
     this.shopService.getAll().subscribe({
-      next: resp => {
+      next: (resp:any) => {
         this.listings = _.chunk(resp.body,3);
+        this.original = [...resp.body];
       }
     })
+  }
+
+  onSearch(e:any) {
+    let query: any =  e.target.data;
+    if (query === '') {
+      this.listings = _.chunk(this.original, 3);
+      return;
+    }
+    this.listings = _.chunk(this.original.filter(l => l.name.toLowerCase().includes(query.toLowerCase()) ||  l.description.toLowerCase().includes(query.toLowerCase())), 3);
   }
 }

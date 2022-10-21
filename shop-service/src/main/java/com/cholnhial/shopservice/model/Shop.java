@@ -31,4 +31,7 @@ public class Shop {
 
     @Column
     private String picture;
+
+    @Column
+    private String email;
 }

@@ -20,6 +20,7 @@ export class JoinComponent implements OnInit {
   faEdit = faEdit;
 
   newProjects: IProject[][] = [];
+  originals: IProject[] = [];
 
   constructor( private projectService: ProjectsService, private principalService: PrincipalService) {
   }
@@ -31,12 +32,21 @@ export class JoinComponent implements OnInit {
   loadMyProjects() {
     this.principalService.identity(false).then(user => {
       this.projectService.getAllNotJoined(user.id).subscribe({
-        next: resp => {
+        next: (resp:any) => {
+          this.originals = [...resp.body];
           this.newProjects = _.chunk(resp.body,3);
         }
       });
     });
   }
 
+  onSearch(e:any) {
+    let query: any =  e.target.data;
+    if (query === '') {
+      this.newProjects = _.chunk(this.originals, 3);
+      return;
+    }
+    this.newProjects = _.chunk(this.originals.filter(l => l.title?.toLowerCase().includes(query.toLowerCase()) ||  l.shortDescription?.toLowerCase().includes(query.toLowerCase())), 3);
+  }
 
 }

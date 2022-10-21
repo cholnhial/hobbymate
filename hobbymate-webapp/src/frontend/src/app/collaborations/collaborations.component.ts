@@ -15,6 +15,7 @@ export class CollaborationsComponent implements OnInit {
   faEye = faEye;
   faEdit = faEdit;
   collabs: IProject[][] = [];
+  originals: IProject[] = [];
 
   constructor(private projectService: ProjectsService, private principal: PrincipalService) { }
 
@@ -30,6 +31,15 @@ export class CollaborationsComponent implements OnInit {
         }
       })
     })
+  }
+
+  onSearch(e:any) {
+    let query: any =  e.target.data;
+    if (query === '') {
+      this.collabs = _.chunk(this.originals, 3);
+      return;
+    }
+    this.collabs = _.chunk(this.originals.filter(l => l.title?.toLowerCase().includes(query.toLowerCase()) ||  l.shortDescription?.toLowerCase().includes(query.toLowerCase())), 3);
   }
 
 }

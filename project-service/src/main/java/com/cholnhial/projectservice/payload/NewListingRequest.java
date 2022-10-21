@@ -18,4 +18,6 @@ public class NewListingRequest {
     private BigDecimal price;
 
     private String picture;
+
+    private String email;
 }

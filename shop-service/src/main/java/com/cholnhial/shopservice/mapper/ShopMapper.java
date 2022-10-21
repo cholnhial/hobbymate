@@ -15,6 +15,7 @@ public class ShopMapper {
         shop.setPicture(request.getPicture());
         shop.setPrice(request.getPrice());
         shop.setArtefactId(request.getArtefactId());
+        shop.setEmail(request.getEmail());
         return shop;
     }
 
@@ -26,6 +27,7 @@ public class ShopMapper {
         shopResponse.setPicture(shop.getPicture());
         shopResponse.setArtefactId(shop.getArtefactId());
         shopResponse.setPrice(shop.getPrice());
+        shopResponse.setEmail(shop.getEmail());
 
         return shopResponse;
     }

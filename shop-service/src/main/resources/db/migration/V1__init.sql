@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `shop` (
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,
   `price` DECIMAL(20,2) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   `picture` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_shop_artefact1_idx` (`artefact_id` ASC) VISIBLE)

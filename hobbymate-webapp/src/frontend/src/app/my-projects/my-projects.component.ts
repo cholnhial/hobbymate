@@ -22,6 +22,7 @@ export class MyProjectsComponent implements OnInit {
 
   project:INewProject = {userId: 1, title: '', description: '', shortDescription: ''};
   myProjects: IProject[][] = [];
+  originals: IProject[] = [];
   projectSelected: IUpdateProject = {
     artefact: {},
     description: "",
@@ -87,7 +88,8 @@ export class MyProjectsComponent implements OnInit {
   loadMyProjects() {
     this.principal.identity(false).then(user => {
       this.projectService.getAllUserProjects(user.id).subscribe({
-        next: resp => {
+        next: (resp:any) => {
+          this.originals = [...resp.body];
           this.myProjects = _.chunk(resp.body,3);
         }
       })
@@ -122,5 +124,16 @@ export class MyProjectsComponent implements OnInit {
   onSelectedProjectContentChanged(update: any) {
     this.projectSelected.description = update.html;
   }
+
+  onSearch(e:any) {
+    let query: any =  e.target.data;
+    if (query === '') {
+      this.myProjects = _.chunk(this.originals, 3);
+      return;
+    }
+    this.myProjects = _.chunk(this.originals.filter(l => l.title?.toLowerCase().includes(query.toLowerCase()) ||  l.shortDescription?.toLowerCase().includes(query.toLowerCase())), 3);
+  }
+
+
 
 }

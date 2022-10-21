@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -74,9 +75,12 @@ public class ProjectService {
 
     @Transactional
     public Project updateProject(Project project) {
-        ServiceInstance userServiceInstance = loadBalancerClient.choose("HOBBYMATE-SHOP-SERVICE");
+        ServiceInstance shopServiceInstance = loadBalancerClient.choose("HOBBYMATE-SHOP-SERVICE");
+        ServiceInstance userServiceInstance = loadBalancerClient.choose("HOBBYMATE-USER-SERVICE");
+        String url = userServiceInstance.getUri().toString() + "/users/api/user/" + project.getUserId();
+        ResponseEntity<UserResponse> userResponse = restTemplate.exchange(url, HttpMethod.GET, HttpEntity.EMPTY, UserResponse.class);
         if (project.getArtefact().getIsListed()) {
-            String urlList = userServiceInstance.getUri().toString() + "/shop/api/list";
+            String urlList = shopServiceInstance.getUri().toString() + "/shop/api/list";
             // list in shop
             NewListingRequest listing = new NewListingRequest();
             listing.setArtefactId(project.getArtefact().getId());
@@ -84,11 +88,12 @@ public class ProjectService {
             listing.setName(project.getArtefact().getName());
             listing.setPrice(project.getArtefact().getPrice());
             listing.setPicture(project.getArtefact().getPicture());
+            listing.setEmail(Objects.requireNonNull(userResponse.getBody()).getEmail());
             HttpEntity<NewListingRequest> request = new HttpEntity<>(listing, HttpHeaders.EMPTY);
             ResponseEntity<String> response = restTemplate.postForEntity(urlList, request, String.class);
         } else {
             // unlist in shop
-            String unlistUrl = userServiceInstance.getUri().toString() + "/shop/api/unlist/" + project.getArtefact().getId();
+            String unlistUrl = shopServiceInstance.getUri().toString() + "/shop/api/unlist/" + project.getArtefact().getId();
             HttpEntity<String> request = new HttpEntity<>("", HttpHeaders.EMPTY);
             ResponseEntity<String> response = restTemplate.exchange(unlistUrl, HttpMethod.POST, request, String.class);
         }

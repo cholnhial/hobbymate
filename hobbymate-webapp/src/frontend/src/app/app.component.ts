@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "./user.service";
-import {Router} from "@angular/router";
+import {NavigationStart, Router} from "@angular/router";
 import {PrincipalService} from "./principal.service";
 
 @Component({
@@ -10,9 +10,20 @@ import {PrincipalService} from "./principal.service";
 })
 export class AppComponent implements OnInit{
   title = 'frontend';
-  user: any;
-  constructor(private userService: UserService, private principal: PrincipalService, private router: Router) {
+  showHead: boolean = false;
+
+  constructor(private userService: UserService, public principal: PrincipalService, private router: Router) {
+    router.events.forEach((event) => {
+      if (event instanceof NavigationStart) {
+        if (event['url'] == '/login' || event['url'] == '/register') {
+          this.showHead = false;
+        } else {
+          this.showHead = true;
+        }
+      }
+    });
   }
+
 
 
   logout() {
@@ -21,9 +32,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.principal.identity(false).then(user => {
-      this.user = user;
-    })
+
   }
 
 }

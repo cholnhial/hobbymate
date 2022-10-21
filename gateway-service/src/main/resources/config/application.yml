@@ -18,6 +18,21 @@ spring:
           uri: lb://HOBBYMATE-SHOP-SERVICE
           predicates:
           - Path=/shop/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:9797"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - HEAD
+              - PUT
+              - DELETE
+              - OPTIONS
+      httpclient:
+        connect-timeout: 10000
+        response-timeout: 60s
 server:
   port: ${PORT:8095}
 eureka:

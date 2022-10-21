@@ -22,4 +22,6 @@ public class ShopResponse {
     private BigDecimal price;
 
     private String picture;
+
+    private String email;
 }

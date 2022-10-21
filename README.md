@@ -9,6 +9,17 @@ The audience are hobbyist and anyone interested in collaborating with others on 
 * Netflix Eureka (Service Discovery)
 * Netflix Ribbon (Clientside LoadBalancing) - Eureka runs at http://localhost:8761/
 
+# Important NOTE
+This will only work on a local machine as the client application (Angular) needs to have the ip address configured.
+It has been configured to local host and compiled with it. If you run on the real cloud you'll need to modify the `hobbymate-webapp/src/frontend/src/app/enviroment`.
+So I highly recommend you run this on your local docker environment.
+
+## Database Issues!
+cleans all the volumes for mysql
+```bash
+docker-compose rm -v -f
+docker volume prune -f
+```
 
 # Where is the app?
 After running with docker compose or deploying to swarm the app will be available at http://localhost:9797
@@ -27,7 +38,7 @@ docker-compose up --build --force-recreate
 ```bash
 docker-compose build  --force-rm
 docker swarm init
-docker stack deploy --compose-file=docker-compose.yml hobbymate
+docker stack deploy --compose-file=docker-compose-swarm.yml hobbymate
 ```
 
 ## 2. Recompiling Java and building images
@@ -43,7 +54,7 @@ Give the services sometime to start they will take a while as some will be attem
 ```bash
 docker-compose build  --force-rm
 docker swarm init
-docker stack deploy --compose-file=docker-compose.yml hobbymate
+docker stack deploy --compose-file=docker-compose-swarm.yml hobbymate
 ```
 
 ### Run with docker-compose
