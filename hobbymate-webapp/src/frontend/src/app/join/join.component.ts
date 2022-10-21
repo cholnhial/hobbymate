@@ -41,7 +41,7 @@ export class JoinComponent implements OnInit {
   }
 
   onSearch(query: string) {
-    if (query === '') {
+    if (!query || query === '') {
       this.newProjects = _.chunk(this.originals, 3);
       return;
     }

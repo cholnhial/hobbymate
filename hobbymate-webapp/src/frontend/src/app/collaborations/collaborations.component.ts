@@ -34,7 +34,7 @@ export class CollaborationsComponent implements OnInit {
   }
 
   onSearch(query: string) {
-    if (query === '') {
+    if (!query || query === '') {
       this.collabs = _.chunk(this.originals, 3);
       return;
     }

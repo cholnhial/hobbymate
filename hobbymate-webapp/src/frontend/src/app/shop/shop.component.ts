@@ -30,7 +30,7 @@ export class ShopComponent implements OnInit {
   }
 
   onSearch(query: string) {
-    if (query === '') {
+    if (!query || query === '') {
       this.listings = _.chunk(this.original, 3);
       return;
     }

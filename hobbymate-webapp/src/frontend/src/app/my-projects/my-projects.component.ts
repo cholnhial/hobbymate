@@ -126,7 +126,7 @@ export class MyProjectsComponent implements OnInit {
   }
 
   onSearch(query: string) {
-    if (query === '') {
+    if (!query || query === '') {
       this.myProjects = _.chunk(this.originals, 3);
       return;
     }
