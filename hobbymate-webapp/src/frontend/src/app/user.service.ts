@@ -6,6 +6,7 @@ import {IUser} from "./user.model";
 import {LocalStorageService} from "ngx-webstorage";
 import {INewProject} from "./my-projects/new-project.model";
 import {INewRegistration} from "./new-registration.model";
+import {getServerAddress} from "./utils";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,11 @@ export class UserService {
   constructor(private http: HttpClient, private $localStorage: LocalStorageService) {}
 
   register(details: INewRegistration): Observable<HttpResponse<any>> {
-    return this.http.post(SERVER_API_URL + `users/api/register`, details, {observe: 'response'});
+    return this.http.post(getServerAddress() + `users/api/register`, details, {observe: 'response'});
   }
 
   performLogin(email: string): Observable<any> {
-    return this.http.get(SERVER_API_URL + `users/api/login/${email}`,{ observe: 'response' }).pipe(map(authenticateSuccess.bind(this)));
+    return this.http.get(getServerAddress() + `users/api/login/${email}`,{ observe: 'response' }).pipe(map(authenticateSuccess.bind(this)));
 
     function authenticateSuccess(resp: any) {
       this.saveUserAccount(resp.body);

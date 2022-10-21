@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {SERVER_API_URL} from "./app.constants";
 import {IUpdateProject} from "./my-projects/update-project.model";
 import {IShop} from "./shop.model";
+import {getServerAddress} from "./utils";
 
 export type EntityResponseType = HttpResponse<IShop>;
 export type EntityArrayResponseType = HttpResponse<IShop[]>;
@@ -18,7 +19,7 @@ export class ShopService {
   constructor(public http: HttpClient) { }
 
   getAll(): Observable<EntityArrayResponseType> {
-    return this.http.get<IShop[]>(SERVER_API_URL + "shop/api/all/", { observe: 'response' });
+    return this.http.get<IShop[]>(getServerAddress() + "shop/api/all/", { observe: 'response' });
   }
 
 }
