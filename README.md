@@ -47,7 +47,7 @@ When fully ready go to: `http://<your gcp external ip>:9797/`
 ```bash
 docker-compose build  --force-rm
 docker swarm init
-docker stack deploy --compose-file=docker-compose-swarm.yml hobbymate
+docker stack deploy --compose-file=docker-compose.yml hobbymate
 ```
 When fully ready go to: `http://<your gcp external ip>:9797/`
 
@@ -64,7 +64,7 @@ Give the services sometime to start they will take a while as some will be attem
 ```bash
 docker-compose build  --force-rm
 docker swarm init
-docker stack deploy --compose-file=docker-compose-swarm.yml hobbymate
+docker stack deploy --compose-file=docker-compose.yml hobbymate
 ```
 
 ### Run with docker-compose

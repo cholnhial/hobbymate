@@ -5,7 +5,6 @@ services:
     container_name: project-service-mysql
     deploy:
       replicas: 1
-      endpoint_mode: dnsrr
     environment:
       MYSQL_DATABASE: project_db
       MYSQL_ROOT_PASSWORD: root
@@ -18,7 +17,6 @@ services:
     container_name: user-service-mysql
     deploy:
       replicas: 1
-      endpoint_mode: dnsrr
     environment:
       MYSQL_DATABASE: user_db
       MYSQL_ROOT_PASSWORD: root
@@ -31,7 +29,6 @@ services:
     container_name: shop-service-mysql
     deploy:
       replicas: 1
-      endpoint_mode: dnsrr
     environment:
       MYSQL_DATABASE: shop_db
       MYSQL_ROOT_PASSWORD: root
@@ -44,7 +41,6 @@ services:
     container_name: discovery-service
     deploy:
       replicas: 1
-      endpoint_mode: dnsrr
     build:
       context: ./discovery-service
       dockerfile: Dockerfile
@@ -56,7 +52,6 @@ services:
     container_name: gateway-service
     deploy:
       replicas: 1
-      endpoint_mode: dnsrr
     build:
       context: ./gateway-service
       dockerfile: Dockerfile
@@ -74,8 +69,6 @@ services:
     build:
       context: ./project-service
       dockerfile: Dockerfile
-    ports:
-      - "8090:8090"
     links:
       - discovery
       - project-service-db
@@ -92,8 +85,6 @@ services:
     build:
       context: ./user-service
       dockerfile: Dockerfile
-    ports:
-      - "8093:8093"
     links:
       - discovery
       - user-service-db
@@ -110,8 +101,6 @@ services:
     build:
       context: ./shop-service
       dockerfile: Dockerfile
-    ports:
-      - "8091:8091"
     links:
       - discovery
       - shop-service-db
@@ -124,7 +113,6 @@ services:
     container_name: hobbymate-webapp
     deploy:
       replicas: 1
-      endpoint_mode: dnsrr
     build:
       context: ./hobbymate-webapp
       dockerfile: Dockerfile
