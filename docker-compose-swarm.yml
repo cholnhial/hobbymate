@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 services:
   project-service-db:
     image: mysql:8.0
@@ -53,6 +53,7 @@ services:
   projects:
     deploy:
       replicas: 2
+      endpoint_mode: dnsrr
     image: hobbymate/project-service-api
     container_name: project-service
     build:
