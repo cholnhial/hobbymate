@@ -29,8 +29,7 @@ export class ShopComponent implements OnInit {
     })
   }
 
-  onSearch(e:any) {
-    let query: any =  e.target.data;
+  onSearch(query: string) {
     if (query === '') {
       this.listings = _.chunk(this.original, 3);
       return;

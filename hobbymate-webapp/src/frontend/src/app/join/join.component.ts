@@ -40,8 +40,7 @@ export class JoinComponent implements OnInit {
     });
   }
 
-  onSearch(e:any) {
-    let query: any =  e.target.data;
+  onSearch(query: string) {
     if (query === '') {
       this.newProjects = _.chunk(this.originals, 3);
       return;

@@ -125,8 +125,7 @@ export class MyProjectsComponent implements OnInit {
     this.projectSelected.description = update.html;
   }
 
-  onSearch(e:any) {
-    let query: any =  e.target.data;
+  onSearch(query: string) {
     if (query === '') {
       this.myProjects = _.chunk(this.originals, 3);
       return;
